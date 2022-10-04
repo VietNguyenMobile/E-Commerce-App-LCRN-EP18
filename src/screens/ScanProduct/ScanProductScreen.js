@@ -63,7 +63,9 @@ const ScanProductScreen = ({navigation}) => {
   const toggleActiveState = async () => {
     if (barcodes && barcodes.length > 0 && isScanned === false) {
       setIsScanned(true);
+      console.log('barcodes: ', JSON.stringify(barcodes));
       barcodes.forEach(async scannedBarcode => {
+        console.log('scannedBarcode: ', scannedBarcode);
         if (scannedBarcode.rawValue !== '') {
           setBarcode(scannedBarcode.rawValue);
           productAnimationState.transitionTo('show');
