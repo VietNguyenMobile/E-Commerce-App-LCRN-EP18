@@ -1,18 +1,15 @@
 import React from 'react';
-import {TouchableOpacity, Text, Image} from 'react-native';
-import {FONTS, COLORS} from '../constants';
+import { TouchableOpacity, Text, Image } from 'react-native';
+import { FONTS, COLORS } from '../constants';
 
 const IconButton = ({
-  contentContainerStyle,
+  containerStyle,
   disabled,
   label,
   labelStyle,
   onPress,
   icon,
-  iconStyle = {
-    width: 25,
-    height: 25,
-  },
+  iconStyle,
   tintColor = '#000',
 }) => {
   return (
@@ -21,14 +18,18 @@ const IconButton = ({
         alignItems: 'center',
         justifyContent: 'center',
         // backgroundColor: COLORS.primary,
-        ...contentContainerStyle,
+        ...containerStyle,
       }}
       disabled={disabled}
       onPress={onPress}>
       {/* <Text style={{color: COLORS.secondary, ...FONTS.h3, ...labelStyle}}>
         {label}
       </Text> */}
-      <Image style={{...iconStyle, tintColor: tintColor}} source={icon} />
+      <Image
+        style={{ width: 30, height: 30, tintColor: COLORS.white, ...iconStyle }}
+        source={icon}
+        resizeMode="contain"
+      />
     </TouchableOpacity>
   );
 };

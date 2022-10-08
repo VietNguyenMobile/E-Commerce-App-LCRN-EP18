@@ -7,6 +7,7 @@ import {
   Walkthrough,
   HomeScreen,
   ScanProductScreen,
+  AuthMain,
 } from './src/screens';
 import 'react-native-reanimated';
 
@@ -19,11 +20,12 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={'Walkthrough'}>
+        initialRouteName={'AuthMain'}>
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Walkthrough" component={Walkthrough} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ScanProductScreen" component={ScanProductScreen} />
+        <Stack.Screen name="AuthMain" component={AuthMain} />
       </Stack.Navigator>
     </NavigationContainer>
   );

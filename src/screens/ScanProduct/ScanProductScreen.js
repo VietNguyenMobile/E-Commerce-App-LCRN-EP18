@@ -109,7 +109,7 @@ const ScanProductScreen = ({navigation}) => {
         <IconButton icon={icons.flash} />
         <IconButton
           icon={icons.question_mark}
-          contentContainerStyle={{
+          containerStyle={{
             marginLeft: SIZES.base,
           }}
         />
@@ -262,7 +262,7 @@ const ScanProductScreen = ({navigation}) => {
               }}>
               <IconButton
                 icon={icons.scan}
-                contentContainerStyle={{
+                containerStyle={{
                   height: 60,
                   width: 60,
                   borderRadius: 30,
