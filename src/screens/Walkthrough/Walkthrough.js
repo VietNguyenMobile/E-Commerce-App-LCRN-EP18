@@ -1,15 +1,15 @@
-import React, {useState, useRef} from 'react';
-import {View, Text, Animated} from 'react-native';
-import {TextButton} from '../../components';
+import React, { useState, useRef } from 'react';
+import { View, Text, Animated } from 'react-native';
+import { TextButton } from '../../components';
 import Walkthrough1 from './Walkthrough1';
 import Walkthrough2 from './Walkthrough2';
-import {COLORS, SIZES, constants, FONTS, dummyData} from '../../constants';
+import { COLORS, SIZES, constants, FONTS, dummyData } from '../../constants';
 
-const Walkthrough = ({navigation}) => {
+const Walkthrough = ({ navigation }) => {
   // Walkthrough 2
   const [walkthrough2Animate, setWalkthrough2Animate] = useState(false);
 
-  const onViewChangeRef = useRef(({viewableItems, changed}) => {
+  const onViewChangeRef = useRef(({ viewableItems, changed }) => {
     if (viewableItems[0].index === 1) {
       // Walkthrough 2
       setWalkthrough2Animate(true);
@@ -69,7 +69,7 @@ const Walkthrough = ({navigation}) => {
         }}>
         <Dots />
         {/* Buttons */}
-        <View style={{flexDirection: 'row', height: 55}}>
+        <View style={{ flexDirection: 'row', height: 55 }}>
           <TextButton
             label="Join Now"
             contentContainerStyle={{
@@ -80,6 +80,9 @@ const Walkthrough = ({navigation}) => {
             labelStyle={{
               color: COLORS.primary,
               ...FONTS.h3,
+            }}
+            onPress={() => {
+              navigation.navigate('HomeScreen');
             }}
           />
           <TextButton
@@ -97,7 +100,7 @@ const Walkthrough = ({navigation}) => {
             onPress={() => {
               navigation.reset({
                 index: 0,
-                routes: [{name: 'AuthMain'}],
+                routes: [{ name: 'AuthMain' }],
               });
             }}
           />
@@ -107,7 +110,7 @@ const Walkthrough = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: COLORS.light}}>
+    <View style={{ flex: 1, backgroundColor: COLORS.light }}>
       <Animated.FlatList
         data={dummyData.walkThrough}
         keyExtractor={item => item.id}
@@ -118,16 +121,16 @@ const Walkthrough = ({navigation}) => {
         scrollEventThrottle={16}
         onViewableItemsChanged={onViewChangeRef.current}
         onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
           {
             useNativeDriver: false,
           },
         )}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return (
-            <View style={{width: SIZES.width, justifyContent: 'center'}}>
+            <View style={{ width: SIZES.width, justifyContent: 'center' }}>
               {/* Walkthrough Images */}
-              <View style={{flex: 1, justifyContent: 'center'}}>
+              <View style={{ flex: 1, justifyContent: 'center' }}>
                 {index === 0 && <Walkthrough1 />}
                 {index === 1 && <Walkthrough2 animate={walkthrough2Animate} />}
               </View>
@@ -139,7 +142,7 @@ const Walkthrough = ({navigation}) => {
                   justifyContent: 'flex-start',
                   paddingHorizontal: SIZES.padding,
                 }}>
-                <Text style={{...FONTS.h1}}>{item.title}</Text>
+                <Text style={{ ...FONTS.h1 }}>{item.title}</Text>
                 <Text
                   style={{
                     ...FONTS.body3,

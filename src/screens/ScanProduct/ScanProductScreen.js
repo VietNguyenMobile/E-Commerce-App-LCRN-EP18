@@ -1,14 +1,22 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, TouchableOpacity, Linking, Image} from 'react-native';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import {MotiView, useAnimationState} from 'moti';
-import {Shadow} from 'react-native-shadow-2';
-import {Svg, Defs, Rect, Mask} from 'react-native-svg';
-import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
-import {TextButton, IconButton} from '../../components';
-import {COLORS, SIZES, FONTS, icons, constants, images} from '../../constants';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import { View, Text, TouchableOpacity, Linking, Image } from 'react-native';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { MotiView, useAnimationState } from 'moti';
+import { Shadow } from 'react-native-shadow-2';
+import { Svg, Defs, Rect, Mask } from 'react-native-svg';
+import { useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner';
+import { TextButton, IconButton } from '../../components';
+import {
+  COLORS,
+  SIZES,
+  FONTS,
+  icons,
+  constants,
+  images,
+} from '../../constants';
 
-const ScanProductScreen = ({navigation}) => {
+const ScanProductScreen = ({ navigation }) => {
   // State
   const [selectedOption, setSelectedOption] = useState(
     constants.scan_product_option.qr,
@@ -215,12 +223,12 @@ const ScanProductScreen = ({navigation}) => {
 
   const renderCamera = () => {
     if (device == null) {
-      return <View style={{flex: 1}} />;
+      return <View style={{ flex: 1 }} />;
     } else {
       return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Camera
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             device={device}
             isActive={true}
             enableZoomGesture
@@ -364,17 +372,17 @@ const ScanProductScreen = ({navigation}) => {
                 {/* Image */}
                 <Image
                   source={images.luggage_01}
-                  style={{width: 60, height: 60, borderRadius: 30}}
+                  style={{ width: 60, height: 60, borderRadius: 30 }}
                 />
                 {/* Product name & SKU */}
-                <View style={{flex: 1, marginLeft: SIZES.radius}}>
-                  <Text style={{...FONTS.h3, color: COLORS.primary}}>
+                <View style={{ flex: 1, marginLeft: SIZES.radius }}>
+                  <Text style={{ ...FONTS.h3, color: COLORS.primary }}>
                     Vali Sakos
                   </Text>
-                  <Text style={{...FONTS.body4}}>SKU: 123456789</Text>
+                  <Text style={{ ...FONTS.body4 }}>SKU: 123456789</Text>
                 </View>
                 {/* Price */}
-                <Text style={{...FONTS.h3, color: COLORS.primary}}>
+                <Text style={{ ...FONTS.h3, color: COLORS.primary }}>
                   $ 69.00
                 </Text>
               </TouchableOpacity>
@@ -386,7 +394,7 @@ const ScanProductScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {/* Header */}
       {renderHeader()}
 

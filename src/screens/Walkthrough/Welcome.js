@@ -1,10 +1,9 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import { View, Text, Image } from 'react-native';
+import { TextButton } from '../../components';
+import { COLORS, FONTS, SIZES, images } from '../../constants';
 
-import {TextButton} from '../../components';
-import {COLORS, FONTS, SIZES, images} from '../../constants';
-
-const Welcome = ({navigation}) => {
+const Welcome = ({ navigation }) => {
   return (
     <View
       style={{
@@ -26,8 +25,10 @@ const Welcome = ({navigation}) => {
           }}
         />
 
-        <Text style={{marginTop: SIZES.padding, ...FONTS.h1}}>Welcome to</Text>
-        <Text style={{marginTop: SIZES.base, ...FONTS.h1}}>Margaret</Text>
+        <Text style={{ marginTop: SIZES.padding, ...FONTS.h1 }}>
+          Welcome to
+        </Text>
+        <Text style={{ marginTop: SIZES.base, ...FONTS.h1 }}>Margaret</Text>
       </View>
 
       {/* Footer Buttons */}
