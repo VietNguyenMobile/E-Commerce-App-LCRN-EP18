@@ -84,6 +84,9 @@ const scan_product_option = {
   camera: 'CAMERA',
 };
 
+const xClientId = 'f0a5a2c8-1b45-47ec-8145-e471ec807eac';
+const xApiKey = '53fb9468-547c-4b03-889b-9c96017df0a2';
+
 export default {
   walkthrough_01_01_images,
   walkthrough_01_02_images,
@@ -92,4 +95,6 @@ export default {
   dashboard_screens,
   bottom_tabs,
   scan_product_option,
+  xClientId,
+  xApiKey,
 };

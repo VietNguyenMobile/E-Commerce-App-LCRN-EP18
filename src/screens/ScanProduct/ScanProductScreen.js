@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { View, Text, TouchableOpacity, Linking, Image } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Linking,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { MotiView, useAnimationState } from 'moti';
 import { Shadow } from 'react-native-shadow-2';
@@ -18,6 +26,7 @@ import {
 
 const ScanProductScreen = ({ navigation }) => {
   // State
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
     constants.scan_product_option.qr,
   );
@@ -71,12 +80,52 @@ const ScanProductScreen = ({ navigation }) => {
   const toggleActiveState = async () => {
     if (barcodes && barcodes.length > 0 && isScanned === false) {
       setIsScanned(true);
-      console.log('barcodes: ', JSON.stringify(barcodes));
+      // console.log('barcodes: ', JSON.stringify(barcodes));
       barcodes.forEach(async scannedBarcode => {
-        console.log('scannedBarcode: ', scannedBarcode);
+        // console.log('scannedBarcode: ', scannedBarcode);
         if (scannedBarcode.rawValue !== '') {
           setBarcode(scannedBarcode.rawValue);
-          productAnimationState.transitionTo('show');
+          console.log('scannedBarcode.rawValue: ', scannedBarcode.rawValue);
+          setIsLoading(true);
+          fetch(
+            'https://viet-nguyen-server.herokuapp.com/api/v1/decode-vietqr',
+            {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                content: scannedBarcode.rawValue,
+              }),
+            },
+          )
+            .then(response => response.json())
+            .then(json => {
+              console.log('json: ', json);
+              console.log(
+                'json.data.consumer.bankBin: ',
+                json.data.consumer.bankBin,
+              );
+              console.log(
+                'json.data.consumer.bankNumber: ',
+                json.data.consumer.bankNumber,
+              );
+              navigation.navigate('BankTransfer', {
+                bankBin: json.data.consumer.bankBin,
+                bankNumber: json.data.consumer.bankNumber,
+                purpose: json.data.additionalData.purpose,
+                amount: json.data.amount,
+              });
+              // return json;
+              setIsLoading(false);
+            })
+            .catch(error => {
+              console.error(error);
+              setIsLoading(false);
+            });
+
+          // productAnimationState.transitionTo('show');
         }
       });
     }
@@ -88,7 +137,7 @@ const ScanProductScreen = ({ navigation }) => {
       <View
         style={{
           flexDirection: 'row',
-          paddingTop: SIZES.padding * 2,
+          paddingTop: SIZES.radius,
           paddingBottom: SIZES.radius,
           paddingHorizontal: SIZES.padding,
           alignItems: 'center',
@@ -199,7 +248,7 @@ const ScanProductScreen = ({ navigation }) => {
         <Defs>
           <Mask id="mask" x="0" y="0" height="100%" width="100%">
             <Rect height="100%" width="100%" fill="#fff" />
-            <Rect height="250" width="250" fill="black" x="18%" y="30%" />
+            <Rect height="250" width="250" fill="black" x="18%" y="15%" />
           </Mask>
         </Defs>
         <Rect
@@ -211,7 +260,7 @@ const ScanProductScreen = ({ navigation }) => {
         {/* Frame Border */}
         <Rect
           x="18%"
-          y="30%"
+          y="15%"
           width="250"
           height="250"
           strokeWidth="5"
@@ -311,7 +360,7 @@ const ScanProductScreen = ({ navigation }) => {
               <View
                 style={{
                   position: 'absolute',
-                  top: '15%',
+                  top: '5%',
                   left: 0,
                   right: 0,
                   alignItems: 'center',
@@ -323,6 +372,24 @@ const ScanProductScreen = ({ navigation }) => {
                   }}>
                   Scan...
                 </Text>
+              </View>
+
+              <View
+                style={{
+                  position: 'absolute',
+                  top: SIZES.height * 0.2 + 200,
+                  left: -10,
+                  right: 0,
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                  // backgroundColor: 'red',
+                  justifyContent: 'center',
+                }}>
+                <Image
+                  style={styles.iconProvider}
+                  source={images.IconVietQRNapasVN}
+                  resizeMode="stretch"
+                />
               </View>
 
               {/* Label 2 */}
@@ -393,6 +460,26 @@ const ScanProductScreen = ({ navigation }) => {
     }
   };
 
+  const loadingView = () => {
+    return (
+      <View
+        style={[
+          {
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            right: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: COLORS.dark80,
+          },
+        ]}>
+        <ActivityIndicator color={'rgba(123, 96, 238, 1)'} size="large" />
+      </View>
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {/* Header */}
@@ -403,8 +490,20 @@ const ScanProductScreen = ({ navigation }) => {
 
       {/* Footer */}
       {renderFooter()}
+      {isLoading && loadingView()}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  iconProvider: {
+    marginTop: 16,
+    height: 34,
+    width: 278,
+    // resizeMode: 'stretch',
+    borderRadius: 6,
+    // backgroundColor: 'blue',
+  },
+});
 
 export default ScanProductScreen;

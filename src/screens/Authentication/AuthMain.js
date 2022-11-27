@@ -79,7 +79,7 @@ const AuthMain = ({ navigation }) => {
                 color: COLORS.dark,
                 ...FONTS.h1,
               }}>
-              Sign in to continue
+              Pha ke Bank
             </Text>
             <KeyboardAwareScrollView
               enableOnAndroid={true}

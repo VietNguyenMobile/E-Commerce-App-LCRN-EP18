@@ -17,6 +17,7 @@ import HomeScreen from './src/screens/Home/HomeScreen';
 import ScanProductScreen from './src/screens/ScanProduct/ScanProductScreen';
 import AuthMain from './src/screens/Authentication/AuthMain';
 import BankListScreen from './src/screens/BankList/BankListScreen';
+import BankTransferScreen from './src/screens/BankTransfer/BankTransferScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ const App = () => {
         <Stack.Screen name="ScanProductScreen" component={ScanProductScreen} />
         <Stack.Screen name="AuthMain" component={AuthMain} />
         <Stack.Screen name="BankList" component={BankListScreen} />
+        <Stack.Screen name="BankTransfer" component={BankTransferScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

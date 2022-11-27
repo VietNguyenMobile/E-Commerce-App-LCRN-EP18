@@ -1,7 +1,7 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {View, Text, Image} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {SIZES, constants} from '../../constants';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, Image } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { SIZES, constants } from '../../constants';
 
 const ITEM_WIDTH = 120;
 
@@ -102,7 +102,7 @@ const Walkthrough1 = () => {
         scrollEnabled={false}
         keyExtractor={(_, index) => `Slider1_${index}`}
         data={row1Images}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return (
             <View
               style={{
@@ -126,20 +126,20 @@ const Walkthrough1 = () => {
         ref={row2FlatListRef}
         data={row2Images}
         decelerationRate="fast"
-        style={{marginTop: SIZES.padding, transform: [{rotate: '180deg'}]}}
+        style={{ marginTop: SIZES.padding, transform: [{ rotate: '180deg' }] }}
         showsHorizontalScrollIndicator={false}
         horizontal
         listKey="Slider2"
         scrollEnabled={false}
         keyExtractor={(_, index) => `Slider2_${index}`}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return (
             <View
               style={{
                 width: ITEM_WIDTH,
                 alignItems: 'center',
                 justifyContent: 'center',
-                transform: [{rotate: '180deg'}],
+                transform: [{ rotate: '180deg' }],
               }}>
               <Image
                 source={item}

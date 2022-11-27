@@ -11,8 +11,14 @@ const HomeScreen = ({ navigation }) => {
       />
 
       <TextButton
-        label="Bank List"
+        label="Danh sách ngân hàng"
         onPress={() => navigation.navigate('BankList')}
+        contentContainerStyle={{ marginTop: 40 }}
+      />
+
+      <TextButton
+        label="Chuyển Tiền"
+        onPress={() => navigation.navigate('BankTransfer')}
         contentContainerStyle={{ marginTop: 40 }}
       />
     </View>
