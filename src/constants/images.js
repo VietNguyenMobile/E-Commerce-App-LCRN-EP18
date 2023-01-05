@@ -43,6 +43,7 @@ const luggage_01 = require('../assets/images/dummy/luggage_01.png');
 const IconVietQRNapasVN = require('../assets/images/VietQR_Napas_VNPay.png');
 const IconEdit = require('../assets/images/pencil.png');
 const IconClose = require('../assets/images/cross.png');
+const VerifyShield = require('../assets/images/verify_shield.png');
 
 export default {
   banner01,
@@ -87,4 +88,5 @@ export default {
   IconVietQRNapasVN,
   IconEdit,
   IconClose,
+  VerifyShield,
 };

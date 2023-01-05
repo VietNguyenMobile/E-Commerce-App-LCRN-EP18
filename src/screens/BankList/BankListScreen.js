@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Platform,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { TextButton } from '../../components';
 import IconNavRight from './IconArrowRight';
 import IconSearch from './IconSearch';
@@ -61,14 +62,24 @@ const BankListScreen = ({ navigation }) => {
   }, []);
 
   const _renderItem = ({ item }: { item: itemBank }) => {
-    // console.log('item" ', item);
+    console.log('item" ', item);
+    console.log('item.logo: ', item.logo);
     return (
       <View style={styles.item}>
-        <Image
+        {/* <Image
           style={{ height: 100, width: 100 }}
           resizeMode="contain"
           // resizeMode="center"
           source={{ uri: item.logo }}
+        /> */}
+        <FastImage
+          style={{ width: 100, height: 100 }}
+          source={{
+            uri: item.logo,
+            // headers: { Authorization: 'someAuthToken' },
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.contain}
         />
         <View style={{ marginLeft: 10, flex: 1 }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'black' }}>

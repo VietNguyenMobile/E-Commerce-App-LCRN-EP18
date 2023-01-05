@@ -35,6 +35,7 @@ const google = require('../assets/icons/google.png');
 const twitter = require('../assets/icons/twitter.png');
 const linkedin = require('../assets/icons/linkedin.png');
 const video = require('../assets/icons/video.png');
+const logoNapas247 = require('../assets/icons/logo_napas247.png');
 
 export default {
   arrow_down_fill,
@@ -74,4 +75,5 @@ export default {
   twitter,
   linkedin,
   video,
+  logoNapas247,
 };

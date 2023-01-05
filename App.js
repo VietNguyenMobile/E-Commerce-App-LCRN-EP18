@@ -18,6 +18,9 @@ import ScanProductScreen from './src/screens/ScanProduct/ScanProductScreen';
 import AuthMain from './src/screens/Authentication/AuthMain';
 import BankListScreen from './src/screens/BankList/BankListScreen';
 import BankTransferScreen from './src/screens/BankTransfer/BankTransferScreen';
+import ConfirmBankTransferScreen from './src/screens/BankTransfer/ConfirmBankTransferScreen';
+import OTPVerificationScreen from './src/screens/BankTransfer/OTPVerificationScreen';
+import ResultBankTransferScreen from './src/screens/BankTransfer/ResultBankTransferScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +39,18 @@ const App = () => {
         <Stack.Screen name="AuthMain" component={AuthMain} />
         <Stack.Screen name="BankList" component={BankListScreen} />
         <Stack.Screen name="BankTransfer" component={BankTransferScreen} />
+        <Stack.Screen
+          name="ConfirmBankTransfer"
+          component={ConfirmBankTransferScreen}
+        />
+        <Stack.Screen
+          name="OTPVerification"
+          component={OTPVerificationScreen}
+        />
+        <Stack.Screen
+          name="ResultBankTransfer"
+          component={ResultBankTransferScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

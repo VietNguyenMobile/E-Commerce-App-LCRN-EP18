@@ -31,10 +31,6 @@ export const isNumber = text => {
   return regExp.test(text);
 };
 
-const regexNonNumeric = /[^0-9]+/g;
-const regexNonStartWith0 = /^0+/;
-const thousands = '.';
-
 const BankTransferScreen = ({ navigation, route }) => {
   console.log('route.params: ', route.params);
 
@@ -47,55 +43,6 @@ const BankTransferScreen = ({ navigation, route }) => {
   const [accountNumber, setAccountNumber] = useState('');
   const [accountName, setAccountName] = useState('');
   const [isShowBankSelect, setIsShowBankSelect] = useState(false);
-
-  // useEffect(() => {
-  //   console.log('route.params: ', route.params);
-  //   if (route.params.bankBin) {
-  //     try {
-  //       setIsLoading(true);
-  //       fetch('https://api.vietqr.io/v2/lookup', {
-  //         method: 'POST',
-  //         headers: {
-  //           'x-client-id': constants.xClientId,
-  //           'x-api-key': constants.xApiKey,
-  //           Accept: 'application/json',
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           bin: route.params.bankBin,
-  //           accountNumber: route.params.bankNumber,
-  //         }),
-  //       })
-  //         .then(res => res.json())
-  //         .then(response => {
-  //           console.log('response: ', response);
-  //           setAccountNumber(route.params.bankNumber);
-  //           setAccountName(response.data.accountName);
-  //           if (route.params.amount) {
-  //             setAmount(route.params.amount);
-  //           }
-
-  //           if (route.params.purpose) {
-  //             setNote(route.params.purpose);
-  //           }
-
-  //           setIsLoading(false);
-  //         })
-  //         .catch(error => {
-  //           setIsLoading(false);
-  //           console.log('error: ', error);
-  //         });
-  //       // console.log('response: ', response);
-  //       // const jsonData = await response.json();
-  //       // console.log('json.movies: ', jsonData.data);
-
-  //       // setData(json.movies);
-  //     } catch (error) {
-  //       console.log('error: ', error);
-  //       setIsLoading(false);
-  //     }
-  //   }
-  // }, []);
 
   useEffect(() => {
     const getBankList = async () => {
@@ -110,7 +57,7 @@ const BankTransferScreen = ({ navigation, route }) => {
         });
         // console.log('response: ', response);
         const jsonData = await responseBanks.json();
-        // console.log('json.movies: ', jsonData.data);
+        console.log('json.movies: ', jsonData.data);
         setDataBank(jsonData.data);
         if (route.params.bankBin) {
           try {
@@ -145,10 +92,7 @@ const BankTransferScreen = ({ navigation, route }) => {
                   bank => bank.bin === route.params.bankBin,
                 );
 
-                console.log('selectBank: ', selectBank);
                 if (selectBank) {
-                  // setBankSelected(selectBank);
-                  // setBankName(selectBank.name);
                   onSelectBank(selectBank);
                 }
 
@@ -158,11 +102,6 @@ const BankTransferScreen = ({ navigation, route }) => {
                 setIsLoading(false);
                 console.log('error: ', error);
               });
-            // console.log('response: ', response);
-            // const jsonData = await response.json();
-            // console.log('json.movies: ', jsonData.data);
-
-            // setData(json.movies);
           } catch (error) {
             console.log('error: ', error);
             setIsLoading(false);
@@ -211,39 +150,14 @@ const BankTransferScreen = ({ navigation, route }) => {
     try {
       let text = value;
       // Replace non-numeric characters
-      // text = text.replace(regexNonNumeric, '').split(thousands).join('');
-      // text = text.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-      // text = text.replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-      // text = text.toLocaleString('it-IT', {
-      //   style: 'currency',
-      //   currency: 'VND',
-      // });
-
-      // text = new Intl.NumberFormat('vi-VN', {
-      //   style: 'currency',
-      //   currency: 'VND',
-      // }).format(value);
 
       text = text.replace(/\D/g, '');
       text = text.replace(/(\d)(\d{3})$/, '$1.$2');
       text = text.replace(/(?=(\d{3})+(\D))\B/g, '.');
-
-      // text = text.replace(/\B(?=(\d{3})+(?!\D))/g, '.');
-
-      console.log('text 0 ', text);
       // fix paste text
       if (text.length > 18) {
         text = text.slice(0, 18);
       }
-
-      // prevent user input/paste value start with 0
-      // let validNumber = parseFloat(text);
-
-      // if (isNumber(validNumber) && validNumber > 0) {
-      //   text = text.replace(regexNonStartWith0, '');
-      // } else {
-      //   text = '';
-      // }
 
       setAmount(text);
     } catch (err) {
@@ -288,6 +202,18 @@ const BankTransferScreen = ({ navigation, route }) => {
     }
   };
 
+  const goToConfirm = () => {
+    navigation.navigate('ConfirmBankTransfer', {
+      transferInfoData: {
+        accountName: accountName,
+        amount: amount,
+        accountNumber: accountNumber,
+        bankName: bankName,
+        note: note,
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -300,7 +226,7 @@ const BankTransferScreen = ({ navigation, route }) => {
 
         <Text style={styles.title}>Tạo chuyển tiền</Text>
         <TouchableOpacity onPress={onCancel} activeOpacity={0.8}>
-          <Text style={styles.txtCancel}>Cancel</Text>
+          <Text style={styles.txtCancel}>Huỷ</Text>
         </TouchableOpacity>
       </View>
 
@@ -444,6 +370,7 @@ const BankTransferScreen = ({ navigation, route }) => {
           <TouchableOpacity
             disabled={amount.length < 4}
             activeOpacity={0.8}
+            onPress={goToConfirm}
             style={styles.btn}>
             <Text
               style={{

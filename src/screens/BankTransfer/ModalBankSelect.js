@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import React, { useState, useCallback, useMemo } from 'react';
+import FastImage from 'react-native-fast-image'
 import { itemBank } from '../BankList/BankListScreen';
 import IconSearch from '../BankList/IconSearch';
 import DismissKeyBoard from '../BankList/DismissKeyBoard';
@@ -47,12 +48,21 @@ const ModalBankSelect: React.FunctionComponent<ModalBankSelectType> = ({
           onClose();
         }}>
         <View style={styles.item}>
-          <Image
+          {/* <Image
             style={{ height: 100, width: 100 }}
             resizeMode="contain"
             // resizeMode="center"
             source={{ uri: item.logo }}
-          />
+          /> */}
+          <FastImage
+        style={{ width: 100, height: 100 }}
+        source={{
+            uri: item.logo,
+            // headers: { Authorization: 'someAuthToken' },
+            priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.contain}
+    />
           <View style={{ marginLeft: 10, flex: 1 }}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'black' }}>
               {item.shortName}
